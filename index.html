@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shine Voice — Offline voice assistant for your car</title>
+<meta name="description" content="Shine Voice is an offline voice assistant for the Dongfeng Shine. Say “Hey Shine” to control the AC, windows, sunroof, media and more — no internet, no cloud, everything on-device.">
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0c10;
+    --bg-panel: #12161d;
+    --bg-panel-2: #171c25;
+    --border: #242b36;
+    --text: #f1f4f8;
+    --text-dim: #9aa5b3;
+    --accent: #00e5ff;
+    --accent-dim: #00b8cc;
+    --accent-soft: #6be9ff;
+    --amber: #ff7a3d;
+    --radius: 16px;
+    --max: 1120px;
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.55;
+    overflow-x: hidden;
+  }
+  h1, h2, h3, .brand-word, .banner .tag { font-family: 'Space Grotesk', 'Inter', sans-serif; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  img { max-width: 100%; display: block; }
+  .wrap { max-width: var(--max); margin: 0 auto; padding: 0 24px; position: relative; }
+
+  /* ── Ambient background glows ── */
+  .glow { position: absolute; border-radius: 50%; filter: blur(90px); pointer-events: none; z-index: 0; }
+  .glow-cyan { background: radial-gradient(circle, rgba(0,229,255,0.35), transparent 70%); }
+  .glow-amber { background: radial-gradient(circle, rgba(255,122,61,0.22), transparent 70%); }
+
+  header.nav {
+    position: sticky; top: 0; z-index: 40;
+    background: rgba(10,12,16,0.78);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  /* ── Logo mark ── */
+  .brand { display: flex; align-items: center; gap: 11px; }
+  .brand-mark {
+    width: 34px; height: 34px; border-radius: 10px; flex: none;
+    background: linear-gradient(160deg, #182029, #0a0d12);
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.07) inset, 0 4px 14px rgba(0,229,255,0.18);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .brand-mark svg { display: block; }
+  .brand-word { font-weight: 600; font-size: 19px; letter-spacing: -0.01em; line-height: 1; display: flex; flex-direction: column; }
+  .brand-word .w1 { color: var(--text); }
+  .brand-word .w2 {
+    font-size: 10px; font-weight: 600; letter-spacing: 0.22em; margin-top: 3px;
+    background: linear-gradient(90deg, var(--accent-soft), var(--accent));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  nav.links { display: flex; gap: 26px; }
+  nav.links a { color: var(--text-dim); font-size: 14px; font-weight: 500; }
+  nav.links a:hover { color: var(--text); text-decoration: none; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 11px 20px; border-radius: 10px;
+    font-weight: 600; font-size: 15px;
+    border: 1px solid transparent;
+    cursor: pointer;
+  }
+  .btn-primary { background: linear-gradient(135deg, var(--accent-soft), var(--accent)); color: #05171c; box-shadow: 0 8px 24px rgba(0,229,255,0.28); }
+  .btn-primary:hover { filter: brightness(1.08); text-decoration: none; }
+  .btn-ghost { background: rgba(255,255,255,0.04); color: var(--text); border-color: var(--border); }
+  .btn-ghost:hover { border-color: var(--text-dim); text-decoration: none; }
+
+  /* ── Hero ── */
+  .hero { position: relative; padding: 52px 0 60px; text-align: center; overflow: hidden; }
+  .hero .eyebrow {
+    display: inline-block; padding: 6px 14px; border-radius: 999px;
+    background: var(--bg-panel-2); border: 1px solid var(--border);
+    color: var(--text-dim); font-size: 13px; font-weight: 600; letter-spacing: 0.02em;
+    margin-bottom: 4px; position: relative; z-index: 1;
+  }
+  .hero h1 {
+    position: relative; z-index: 1;
+    font-size: 54px; line-height: 1.08; margin: 0 0 18px; letter-spacing: -0.02em; text-wrap: balance;
+    background: linear-gradient(180deg, #ffffff 0%, #c2cedb 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .hero h1 .accent {
+    background: linear-gradient(180deg, var(--accent-soft) 0%, var(--accent) 60%, var(--accent-dim) 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    text-shadow: 0 0 46px rgba(0,229,255,0.4);
+  }
+  .hero p.lead { position: relative; z-index: 1; font-size: 19px; color: var(--text-dim); max-width: 620px; margin: 0 auto 34px; }
+  .hero .cta { position: relative; z-index: 1; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .hero .hint { position: relative; z-index: 1; margin-top: 14px; font-size: 13px; color: var(--text-dim); }
+
+  .hero-visual { position: relative; height: 260px; max-width: 620px; margin: 4px auto 0; display: flex; align-items: flex-end; justify-content: center; z-index: 1; }
+  .gram-ring { position: absolute; bottom: 0; left: 50%; width: 0; height: 0; animation: gram-spin 22s linear infinite; }
+  .gram-bar { position: absolute; bottom: 0; left: -1.5px; width: 3px; border-radius: 2px; background: linear-gradient(to top, rgba(0,229,255,0.05), var(--accent-soft)); transform-origin: bottom center; }
+  @keyframes gram-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+  .orb {
+    position: absolute; bottom: -46px; left: 50%; transform: translateX(-50%);
+    width: 208px; height: 208px; border-radius: 50%;
+    background: radial-gradient(circle at 42% 30%, #eafeff 0%, #79edff 20%, var(--accent) 46%, #0077a0 76%, #012c3d 100%);
+    box-shadow: 0 0 60px 10px rgba(0,229,255,0.55), 0 0 140px 50px rgba(0,229,255,0.22), inset 0 -18px 40px rgba(0,0,0,0.35);
+    z-index: 2;
+  }
+  .orb::after { content: ""; position: absolute; inset: 0; border-radius: 50%; background: radial-gradient(circle at 38% 24%, rgba(255,255,255,0.55), transparent 30%); }
+  .car-wrap { position: absolute; bottom: 18px; left: 50%; transform: translateX(-50%); z-index: 3; }
+  .car-bob { animation: car-bob 2.6s ease-in-out infinite; }
+  @keyframes car-bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+  .wheel { transform-origin: center; animation: wheel-spin 0.9s linear infinite; }
+  @keyframes wheel-spin { to { transform: rotate(360deg); } }
+
+  /* ── Cinematic banner ── */
+  .banner { position: relative; height: 62vh; min-height: 420px; max-height: 640px; overflow: hidden; }
+  .banner img { width: 100%; height: 100%; object-fit: cover; }
+  .banner .scrim {
+    position: absolute; inset: 0;
+    background:
+      linear-gradient(0deg, rgba(4,5,7,0.97) 0%, rgba(4,5,7,0.4) 40%, transparent 78%),
+      linear-gradient(100deg, rgba(4,5,7,0.65) 0%, transparent 46%);
+  }
+  .banner .content { position: absolute; left: 0; right: 0; bottom: 0; padding: 0 24px 48px; }
+  .banner .content .inner { max-width: var(--max); margin: 0 auto; }
+  .banner h2 { font-size: 38px; margin: 0 0 10px; max-width: 560px; text-wrap: balance; }
+  .banner p { font-size: 17px; color: var(--text-dim); max-width: 480px; margin: 0; }
+  .banner .tag {
+    display: inline-flex; align-items: center; gap: 8px; margin-bottom: 14px;
+    background: rgba(0,229,255,0.12); border: 1px solid rgba(0,229,255,0.35); color: var(--accent-soft);
+    padding: 5px 12px; border-radius: 999px; font-size: 12px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase;
+  }
+
+  section { position: relative; padding: 80px 0; border-top: 1px solid var(--border); }
+  h2 { font-size: 32px; margin: 0 0 12px; letter-spacing: -0.01em; text-wrap: balance; }
+  p.section-lead { color: var(--text-dim); font-size: 16px; max-width: 620px; margin: 0 0 44px; }
+
+  .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; position: relative; z-index: 1; }
+  .feature {
+    background: var(--bg-panel); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 26px; min-width: 0; transition: border-color 0.2s, transform 0.2s;
+  }
+  .feature:hover { border-color: rgba(0,229,255,0.4); transform: translateY(-3px); }
+  .feature .icon {
+    width: 42px; height: 42px; border-radius: 11px;
+    background: var(--bg-panel-2); border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 21px; margin-bottom: 16px;
+  }
+  .feature h3 { font-size: 17px; margin: 0 0 8px; }
+  .feature p { font-size: 14px; color: var(--text-dim); margin: 0; }
+
+  /* ── Screens: illustrated device mockups (not photo composites) ── */
+  .screens { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+  .device-stage {
+    display: flex; flex-direction: column; align-items: center; gap: 20px;
+    background: radial-gradient(circle at 50% 15%, rgba(0,229,255,0.10), transparent 60%), var(--bg-panel);
+    border: 1px solid var(--border); border-radius: 22px; padding: 36px 24px 28px;
+  }
+  .device-mock {
+    width: 210px; background: linear-gradient(160deg, #1c2229, #0c1015);
+    border-radius: 24px; padding: 9px;
+    box-shadow: 0 26px 60px rgba(0,0,0,0.55), inset 0 0 0 1px rgba(255,255,255,0.06);
+  }
+  .device-mock .screen {
+    aspect-ratio: 3 / 4; border-radius: 17px; position: relative; overflow: hidden;
+    background: radial-gradient(circle at 30% 0%, #131a22 0%, #05070a 72%);
+    display: flex; align-items: center; justify-content: center; padding: 14px;
+  }
+  .device-mock .screen::before {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(circle at 50% 38%, rgba(0,229,255,0.16), transparent 55%);
+  }
+  .device-card {
+    position: relative; width: 100%; background: rgba(22,26,32,0.96);
+    border: 1px solid rgba(255,255,255,0.09); border-radius: 13px; padding: 16px 15px;
+    box-shadow: 0 0 46px rgba(0,229,255,0.22);
+  }
+  .device-card .row { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+  .device-card .pulse {
+    width: 9px; height: 9px; border-radius: 50%; background: var(--accent);
+    box-shadow: 0 0 0 0 rgba(0,229,255,0.6); animation: dev-pulse 1.8s infinite;
+  }
+  @keyframes dev-pulse {
+    0% { box-shadow: 0 0 0 0 rgba(0,229,255,0.55); }
+    70% { box-shadow: 0 0 0 8px rgba(0,229,255,0); }
+    100% { box-shadow: 0 0 0 0 rgba(0,229,255,0); }
+  }
+  .device-card .status { font-size: 10px; color: var(--accent); font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }
+  .device-card .heard { font-size: 15px; font-weight: 600; color: #fff; margin-bottom: 5px; }
+  .device-card .reply { font-size: 12px; color: var(--text-dim); }
+
+  /* Done / matched state (mirrors AssistantCard's MATCHED colour, #00D66E) */
+  .device-card.done { box-shadow: 0 0 46px rgba(0,214,110,0.22); }
+  .device-card.done .pulse { background: #00d66e; box-shadow: none; animation: none; }
+  .device-card.done .check {
+    width: 16px; height: 16px; border-radius: 50%; background: #00d66e;
+    display: flex; align-items: center; justify-content: center; flex: none;
+  }
+  .device-card.done .check svg { width: 9px; height: 9px; }
+  .device-card.done .status { color: #00d66e; }
+  .device-mock.done .screen::before { background: radial-gradient(circle at 50% 38%, rgba(0,214,110,0.16), transparent 55%); }
+  .device-caption { text-align: center; font-size: 14px; color: var(--text-dim); }
+  .device-caption b { color: var(--text); }
+
+  .download-panel {
+    background: linear-gradient(160deg, var(--bg-panel) 0%, var(--bg-panel-2) 100%);
+    border: 1px solid var(--border); border-radius: 22px;
+    padding: 52px; text-align: center; position: relative; z-index: 1;
+  }
+  .download-panel h2 { margin-bottom: 10px; }
+  .download-panel p { color: var(--text-dim); margin: 0 0 28px; }
+  .version-pill {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--bg); border: 1px solid var(--border); border-radius: 999px;
+    padding: 6px 14px; font-size: 13px; color: var(--text-dim); margin-bottom: 20px;
+  }
+  .version-pill b { color: var(--text); }
+  .install-steps {
+    text-align: left; max-width: 480px; margin: 32px auto 0;
+    background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+    padding: 20px 24px;
+  }
+  .install-steps ol { margin: 0; padding-left: 20px; color: var(--text-dim); font-size: 14px; }
+  .install-steps li { margin-bottom: 8px; }
+  .install-steps li:last-child { margin-bottom: 0; }
+
+  .compat-note {
+    display: flex; gap: 12px; align-items: flex-start;
+    background: var(--bg-panel); border: 1px solid var(--border); border-radius: 12px;
+    padding: 16px 18px; margin-top: 24px; font-size: 13px; color: var(--text-dim); text-align: left;
+    max-width: 620px; margin-left: auto; margin-right: auto;
+  }
+
+  footer { border-top: 1px solid var(--border); padding: 32px 0; }
+  footer .wrap { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+  footer p { font-size: 13px; color: var(--text-dim); margin: 0; }
+  footer .foot-links { display: flex; gap: 20px; }
+  footer .foot-links a { font-size: 13px; color: var(--text-dim); }
+  footer .foot-links a:hover { color: var(--text); }
+
+  @media (max-width: 900px) {
+    .screens { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 860px) {
+    .features { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 600px) {
+    .hero h1 { font-size: 34px; }
+    .hero p.lead { font-size: 16px; }
+    .features { grid-template-columns: 1fr; }
+    .download-panel { padding: 32px 20px; }
+    nav.links { display: none; }
+    .banner h2 { font-size: 28px; }
+    .banner { height: 52vh; }
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap">
+    <div class="brand">
+      <span class="brand-mark">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <rect x="0.5" y="5" width="2.4" height="6" rx="1.2" fill="#00e5ff" opacity="0.55"/>
+          <rect x="4.3" y="2" width="2.4" height="12" rx="1.2" fill="#00e5ff"/>
+          <rect x="8.1" y="0" width="2.4" height="16" rx="1.2" fill="#79edff"/>
+          <rect x="11.9" y="3" width="2.4" height="10" rx="1.2" fill="#00e5ff" opacity="0.75"/>
+        </svg>
+      </span>
+      <span class="brand-word"><span class="w1">Shine</span><span class="w2">VOICE</span></span>
+    </div>
+    <nav class="links">
+      <a href="#features">Features</a>
+      <a href="#screenshots">Screenshots</a>
+      <a href="#download">Download</a>
+    </nav>
+    <a href="#download" class="btn btn-primary">Download</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="glow glow-cyan" style="width:520px;height:520px;top:-160px;left:50%;transform:translateX(-50%);"></div>
+  <div class="wrap">
+    <span class="eyebrow">Fully offline · No cloud · No account</span>
+
+    <div class="hero-visual">
+      <div class="gram-ring" id="gram-ring"></div>
+      <div class="orb"></div>
+      <div class="car-wrap car-bob">
+        <svg width="180" height="76" viewBox="0 0 180 76" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M18,54 C18,40 34,32 50,30 L64,18 C70,12 80,9 92,9 L118,9 C130,9 140,14 146,24 L158,30
+                   C166,32 170,38 170,46 L170,54 C170,58 167,61 163,61 L14,61 C10,61 7,58 7,54 Z"
+                fill="#141a22" stroke="rgba(0,229,255,0.55)" stroke-width="1.5"/>
+          <path d="M66,28 L78,15 C82,11 88,9 94,9 L112,9 C120,9 126,13 130,20 L138,28 Z"
+                fill="#0a2a33" stroke="rgba(0,229,255,0.35)" stroke-width="1"/>
+          <line x1="102" y1="10" x2="102" y2="28" stroke="rgba(0,229,255,0.3)" stroke-width="1"/>
+          <g transform="translate(46,58)">
+            <circle r="15" fill="#0a0d12" stroke="rgba(0,229,255,0.6)" stroke-width="2"/>
+            <g class="wheel">
+              <line x1="0" y1="-10" x2="0" y2="10" stroke="#00e5ff" stroke-width="2"/>
+              <line x1="-10" y1="0" x2="10" y2="0" stroke="#00e5ff" stroke-width="2"/>
+              <line x1="-7" y1="-7" x2="7" y2="7" stroke="#00e5ff" stroke-width="1.4" opacity="0.6"/>
+              <line x1="-7" y1="7" x2="7" y2="-7" stroke="#00e5ff" stroke-width="1.4" opacity="0.6"/>
+            </g>
+          </g>
+          <g transform="translate(134,58)">
+            <circle r="15" fill="#0a0d12" stroke="rgba(0,229,255,0.6)" stroke-width="2"/>
+            <g class="wheel">
+              <line x1="0" y1="-10" x2="0" y2="10" stroke="#00e5ff" stroke-width="2"/>
+              <line x1="-10" y1="0" x2="10" y2="0" stroke="#00e5ff" stroke-width="2"/>
+              <line x1="-7" y1="-7" x2="7" y2="7" stroke="#00e5ff" stroke-width="1.4" opacity="0.6"/>
+              <line x1="-7" y1="7" x2="7" y2="-7" stroke="#00e5ff" stroke-width="1.4" opacity="0.6"/>
+            </g>
+          </g>
+        </svg>
+      </div>
+    </div>
+
+    <h1>Say <span class="accent">“Hey Shine.”</span><br>Your car listens.</h1>
+    <p class="lead">
+      An offline voice assistant built for the Dongfeng Shine. Windows, AC, sunroof, fan, media
+      and calls — controlled by voice, with everything running on-device. No internet required to work.
+    </p>
+    <div class="cta">
+      <a href="#download" class="btn btn-primary">⬇ Download latest APK</a>
+      <a href="#features" class="btn btn-ghost">See what it can do</a>
+    </div>
+    <p class="hint">Android APK · Sideloaded install · Free</p>
+  </div>
+</section>
+
+<script>
+  (function () {
+    var ring = document.getElementById('gram-ring');
+    var n = 64, radius = 128;
+    for (var i = 0; i < n; i++) {
+      var bar = document.createElement('div');
+      bar.className = 'gram-bar';
+      var angle = (360 / n) * i;
+      var h = 10 + Math.round(16 * Math.abs(Math.sin(i * 0.7))) + (i % 6 === 0 ? 8 : 0);
+      bar.style.height = h + 'px';
+      bar.style.opacity = (0.4 + 0.6 * Math.abs(Math.sin(i * 0.5))).toFixed(2);
+      bar.style.transform = 'rotate(' + angle + 'deg) translateY(-' + radius + 'px)';
+      ring.appendChild(bar);
+    }
+  })();
+</script>
+
+<!-- Cinematic banner: the real car -->
+<div class="banner">
+  <img src="assets/car-front-studio.jpg" alt="Dongfeng Shine, studio shot">
+  <div class="scrim"></div>
+  <div class="content">
+    <div class="inner">
+      <span class="tag">Dongfeng Shine</span>
+      <h2>Built for this exact car, down to the CAN bus.</h2>
+      <p>Every window, vent and switch was tested and verified by hand on the real car — not a generic
+         Android Auto skin, a real integration with this dashboard.</p>
+    </div>
+  </div>
+</div>
+
+<section id="features">
+  <div class="wrap">
+    <h2>Built for the car, not the cloud</h2>
+    <p class="section-lead">
+      Every model — wake word, speech recognition, the reply voice — runs entirely on the head unit.
+      No data leaves the car.
+    </p>
+    <div class="features">
+      <div class="feature">
+        <div class="icon">🎙️</div>
+        <h3>Hands-free wake word</h3>
+        <p>Say “Hey Shine” to start — no button required, though the steering-wheel voice key works too.</p>
+      </div>
+      <div class="feature">
+        <div class="icon">🌡️</div>
+        <h3>Climate control</h3>
+        <p>AC, exact temperature, fan speed, defrost, recirculation, air direction — all by voice.</p>
+      </div>
+      <div class="feature">
+        <div class="icon">🪟</div>
+        <h3>Windows & sunroof</h3>
+        <p>Open, close, or tilt — by voice, no reaching for a switch.</p>
+      </div>
+      <div class="feature">
+        <div class="icon">🎵</div>
+        <h3>Media & calls</h3>
+        <p>Play, pause, skip tracks, adjust volume, or call a contact by name — hands stay on the wheel.</p>
+      </div>
+      <div class="feature">
+        <div class="icon">🔒</div>
+        <h3>Private by design</h3>
+        <p>No microphone audio ever leaves the device. No account, no telemetry, no cloud dependency.</p>
+      </div>
+      <div class="feature">
+        <div class="icon">⚡</div>
+        <h3>Runs as a daemon</h3>
+        <p>Starts automatically at boot and stays out of the way — no icon, no app switcher clutter.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="screenshots">
+  <div class="glow glow-amber" style="width:420px;height:420px;top:20%;right:-140px;"></div>
+  <div class="wrap">
+    <h2>See it in the car</h2>
+    <p class="section-lead">The same on-screen card, every time — this is what actually renders on the head unit.</p>
+
+    <div class="screens">
+      <div class="device-stage">
+        <div class="device-mock">
+          <div class="screen">
+            <div class="device-card">
+              <div class="row"><span class="pulse"></span><span class="status">Listening…</span></div>
+              <div class="heard">“turn on the ac”</div>
+              <div class="reply">Turning on the AC.</div>
+            </div>
+          </div>
+        </div>
+        <p class="device-caption"><b>“Turn on the AC”</b> — heard, confirmed, actioned.</p>
+      </div>
+      <div class="device-stage">
+        <div class="device-mock done">
+          <div class="screen">
+            <div class="device-card done">
+              <div class="row">
+                <span class="check"><svg viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="#05130b" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                <span class="status">Done</span>
+              </div>
+              <div class="heard">“open the sunroof”</div>
+              <div class="reply">Opening the sunroof.</div>
+            </div>
+          </div>
+        </div>
+        <p class="device-caption"><b>Confirmed, not guessed</b> — every command shows what it heard and what it did.</p>
+      </div>
+      <div class="device-stage">
+        <div class="device-mock">
+          <div class="screen">
+            <div class="device-card">
+              <div class="row"><span class="pulse"></span><span class="status">Listening…</span></div>
+              <div class="heard">“hello”</div>
+              <div class="reply">Hello! How can I help you?</div>
+            </div>
+          </div>
+        </div>
+        <p class="device-caption"><b>It talks back</b> — not just commands, a real conversation.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section id="download">
+  <div class="glow glow-cyan" style="width:460px;height:460px;bottom:-120px;left:50%;transform:translateX(-50%);"></div>
+  <div class="wrap">
+    <div class="download-panel">
+      <span class="version-pill">Latest version: <b id="latest-version">checking…</b></span>
+      <h2>Get Shine Voice</h2>
+      <p>Free, sideloaded install — no Play Store needed.</p>
+      <a href="#" id="download-link" class="btn btn-primary" style="font-size:17px; padding:14px 28px;">
+        ⬇ Download APK
+      </a>
+
+      <div class="install-steps">
+        <ol>
+          <li>Download the APK to your phone, then copy it to a USB stick (or download directly on the head unit if it has a browser).</li>
+          <li>On the head unit, open the APK file and tap Install.</li>
+          <li>Open Shine Voice once, allow the microphone and on-screen card, then tap “Start the assistant.”</li>
+          <li>That's it — the icon hides itself. Say “Hey Shine” any time, or press the steering-wheel voice button.</li>
+        </ol>
+      </div>
+
+      <div class="compat-note">
+        ⚠️ Built and tested on a Dongfeng Shine (Qinggan/PATEO head unit, Android 8.1). Other trims — including
+        the GS — and other vehicles or head units have not been tested and may wire the CAN bus differently.
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>Shine Voice — an independent, unofficial project. Not affiliated with Dongfeng Motor or Qinggan.</p>
+    <div class="foot-links">
+      <a href="#features">Features</a>
+      <a href="#download">Download</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  fetch('version.json', { cache: 'no-store' })
+    .then(r => r.ok ? r.json() : Promise.reject())
+    .then(data => {
+      document.getElementById('latest-version').textContent = data.versionName || 'unknown';
+      if (data.apkUrl) document.getElementById('download-link').href = data.apkUrl;
+    })
+    .catch(() => {
+      document.getElementById('latest-version').textContent = 'unavailable';
+    });
+</script>
+
+</body>
+</html>
