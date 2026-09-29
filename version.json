@@ -1,6 +1,6 @@
 {
-  "versionName": "0.6.3-alpha",
-  "versionCode": 10,
-  "apkUrl": "https://github.com/mo-ghoniem/shine-voice/releases/download/v0.6.3-alpha/ShineVoice.apk",
-  "notes": "Wake-word display fix, first-run setup reliability fix, internal audio pipeline improvements."
+  "versionName": "0.7.0-alpha",
+  "versionCode": 11,
+  "apkUrl": "https://github.com/mo-ghoniem/shine-voice/releases/download/v0.7.0-alpha/ShineVoice.apk",
+  "notes": "Added update checking: the status screen now tells you when a newer version is available."
 }
