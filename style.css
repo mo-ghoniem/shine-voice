@@ -278,3 +278,5 @@
       linear-gradient(0deg, rgba(4,5,7,0.97) 0%, rgba(4,5,7,0.4) 40%, transparent 78%),
       linear-gradient(260deg, rgba(4,5,7,0.7) 0%, transparent 50%);
   }
+  /* Arabic letters reach higher and lower than Latin ones: the big headline needs more room between its lines. */
+  [dir="rtl"] .hero h1 { line-height: 1.5; }
