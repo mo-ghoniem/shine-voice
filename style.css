@@ -280,3 +280,8 @@
   }
   /* Arabic letters reach higher and lower than Latin ones: the big headline needs more room between its lines. */
   [dir="rtl"] .hero h1 { line-height: 1.5; }
+  /* The menu links sit on the page's centre line (like everything below them), not halfway between
+     the logo and the buttons, which differ in width. */
+  .nav .wrap { display: grid; grid-template-columns: 1fr auto 1fr; }
+  .nav .wrap > :first-child { justify-self: start; }
+  .nav .wrap > :last-child { justify-self: end; }
