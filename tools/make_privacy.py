@@ -10,6 +10,7 @@ import re
 
 SITE = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 MENU = os.path.join(SITE, "..", "DFMVoiceDaemon", "app", "src", "main", "java", "com", "dfm", "voicedaemon", "MenuScreen.java")
+MAIL = "support@shinevoiceofficial.com"
 UPDATED_EN, UPDATED_AR = "15 October 2026", "١٥ أكتوبر ٢٠٢٦"
 
 STRING = r'"((?:[^"\\]|\\.)*)"'
@@ -64,6 +65,8 @@ def main():
     <h2>Privacy policy</h2>
     <p>This applies to the Shine Voice app for the car, in English and in Arabic. Last updated: {UPDATED_EN}.</p>
 {items(pts, "en")}
+    <h3>Contact</h3>
+    <p>Questions about this policy or the app: <a href="mailto:{MAIL}">{MAIL}</a>.</p>
   </div>
 </section>
 
@@ -72,6 +75,8 @@ def main():
     <h2>سياسة الخصوصية</h2>
     <p>دي بتنطبق على تطبيق شاين للعربية، العربي والإنجليزي. آخر تحديث: {UPDATED_AR}.</p>
 {items(pts, "ar")}
+    <h3>التواصل</h3>
+    <p>للأسئلة عن هذه السياسة أو عن التطبيق: <span dir="ltr"><a href="mailto:{MAIL}">{MAIL}</a></span>.</p>
   </div>
 </section>
 
