@@ -109,7 +109,7 @@
   .orb::after { content: ""; position: absolute; inset: 0; border-radius: 50%; background: radial-gradient(circle at 38% 24%, rgba(255,255,255,0.55), transparent 30%); }
   .car-wrap { position: absolute; bottom: 18px; left: 50%; transform: translateX(-50%); z-index: 3; }
   .car-bob { animation: car-bob 2.6s ease-in-out infinite; }
-  @keyframes car-bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+  @keyframes car-bob { 0%,100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(-3px); } }
   .wheel { transform-origin: center; animation: wheel-spin 0.9s linear infinite; }
   @keyframes wheel-spin { to { transform: rotate(360deg); } }
 
@@ -272,3 +272,9 @@
   [dir="rtl"] body, [dir="rtl"] h1, [dir="rtl"] h2, [dir="rtl"] h3 { font-family: 'Noto Kufi Arabic', 'Inter', sans-serif; }
   @media (max-width: 600px) { .dl-grid { grid-template-columns: 1fr; } }
 
+  /* Arabic: the banner's text sits on the right, so the shade that keeps it readable goes there too. */
+  [dir="rtl"] .banner .scrim {
+    background:
+      linear-gradient(0deg, rgba(4,5,7,0.97) 0%, rgba(4,5,7,0.4) 40%, transparent 78%),
+      linear-gradient(260deg, rgba(4,5,7,0.7) 0%, transparent 50%);
+  }

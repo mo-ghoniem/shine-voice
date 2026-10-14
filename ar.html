@@ -41,7 +41,41 @@
   <div class="glow glow-cyan" style="width:520px;height:520px;top:-160px;left:50%;transform:translateX(-50%);"></div>
   <div class="wrap">
     <span class="eyebrow">مجاني · يعمل دون إنترنت · دون حساب</span>
-    <h1 style="margin-top:28px">قول <span class="accent">«هاي شاين»</span><br>وعربيتك تسمعك.</h1>
+
+    <div class="hero-visual">
+      <div class="gram-ring" id="gram-ring"></div>
+      <div class="orb"></div>
+      <div class="car-wrap car-bob">
+        <svg width="180" height="76" viewBox="0 0 180 76" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M18,54 C18,40 34,32 50,30 L64,18 C70,12 80,9 92,9 L118,9 C130,9 140,14 146,24 L158,30
+                   C166,32 170,38 170,46 L170,54 C170,58 167,61 163,61 L14,61 C10,61 7,58 7,54 Z"
+                fill="#141a22" stroke="rgba(0,229,255,0.55)" stroke-width="1.5"/>
+          <path d="M66,28 L78,15 C82,11 88,9 94,9 L112,9 C120,9 126,13 130,20 L138,28 Z"
+                fill="#0a2a33" stroke="rgba(0,229,255,0.35)" stroke-width="1"/>
+          <line x1="102" y1="10" x2="102" y2="28" stroke="rgba(0,229,255,0.3)" stroke-width="1"/>
+          <g transform="translate(46,58)">
+            <circle r="15" fill="#0a0d12" stroke="rgba(0,229,255,0.6)" stroke-width="2"/>
+            <g class="wheel">
+              <line x1="0" y1="-10" x2="0" y2="10" stroke="#00e5ff" stroke-width="2"/>
+              <line x1="-10" y1="0" x2="10" y2="0" stroke="#00e5ff" stroke-width="2"/>
+              <line x1="-7" y1="-7" x2="7" y2="7" stroke="#00e5ff" stroke-width="1.4" opacity="0.6"/>
+              <line x1="-7" y1="7" x2="7" y2="-7" stroke="#00e5ff" stroke-width="1.4" opacity="0.6"/>
+            </g>
+          </g>
+          <g transform="translate(134,58)">
+            <circle r="15" fill="#0a0d12" stroke="rgba(0,229,255,0.6)" stroke-width="2"/>
+            <g class="wheel">
+              <line x1="0" y1="-10" x2="0" y2="10" stroke="#00e5ff" stroke-width="2"/>
+              <line x1="-10" y1="0" x2="10" y2="0" stroke="#00e5ff" stroke-width="2"/>
+              <line x1="-7" y1="-7" x2="7" y2="7" stroke="#00e5ff" stroke-width="1.4" opacity="0.6"/>
+              <line x1="-7" y1="7" x2="7" y2="-7" stroke="#00e5ff" stroke-width="1.4" opacity="0.6"/>
+            </g>
+          </g>
+        </svg>
+      </div>
+    </div>
+
+    <h1>قول <span class="accent">«هاي شاين»</span><br>وعربيتك تسمعك.</h1>
     <p class="lead">
       أوامر صوتية مجانية لعربية دونج فينج شاين، بالعربي المصري أو بالإنجليزي. بيفهمك جوه العربية من غير نت.
     </p>
@@ -52,6 +86,35 @@
     <p class="hint">تطبيق أندرويد لشاشة السيارة · يُثبَّت من ملف · مجاني</p>
   </div>
 </section>
+
+<script>
+  (function () {
+    var ring = document.getElementById('gram-ring');
+    var n = 64, radius = 128;
+    for (var i = 0; i < n; i++) {
+      var bar = document.createElement('div');
+      bar.className = 'gram-bar';
+      var angle = (360 / n) * i;
+      var h = 10 + Math.round(16 * Math.abs(Math.sin(i * 0.7))) + (i % 6 === 0 ? 8 : 0);
+      bar.style.height = h + 'px';
+      bar.style.opacity = (0.4 + 0.6 * Math.abs(Math.sin(i * 0.5))).toFixed(2);
+      bar.style.transform = 'rotate(' + angle + 'deg) translateY(-' + radius + 'px)';
+      ring.appendChild(bar);
+    }
+  })();
+</script>
+
+<div class="banner">
+  <img src="assets/car-front-studio.jpg" alt="دونغ فنغ شاين">
+  <div class="scrim"></div>
+  <div class="content">
+    <div class="inner">
+      <span class="tag">دونغ فنغ شاين</span>
+      <h2>صُمّم لهذه السيارة تحديداً.</h2>
+      <p>جُرّبت كل نافذة وفتحة تهوية ومفتاح يدوياً على السيارة الحقيقية. ليس تطبيقاً عاماً، بل يعمل مع أنظمة التحكم الخاصة بهذه السيارة.</p>
+    </div>
+  </div>
+</div>
 
 <section id="features">
   <div class="wrap">
