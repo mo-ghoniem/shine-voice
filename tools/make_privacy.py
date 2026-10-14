@@ -73,7 +73,7 @@ def main():
 <section id="ar" lang="ar" dir="rtl">
   <div class="wrap prose">
     <h2>سياسة الخصوصية</h2>
-    <p>دي بتنطبق على تطبيق شاين للعربية، العربي والإنجليزي. آخر تحديث: {UPDATED_AR}.</p>
+    <p>تنطبق هذه السياسة على تطبيق شاين للسيارة، بنسختيه العربية والإنجليزية. آخر تحديث: {UPDATED_AR}.</p>
 {items(pts, "ar")}
     <h3>التواصل</h3>
     <p>للأسئلة عن هذه السياسة أو عن التطبيق: <span dir="ltr"><a href="mailto:{MAIL}">{MAIL}</a></span>.</p>
