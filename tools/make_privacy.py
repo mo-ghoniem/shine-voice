@@ -11,7 +11,7 @@ import re
 SITE = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 MENU = os.path.join(SITE, "..", "DFMVoiceDaemon", "app", "src", "main", "java", "com", "dfm", "voicedaemon", "MenuScreen.java")
 MAIL = "support@shinevoiceofficial.com"
-UPDATED_EN, UPDATED_AR = "15 October 2026", "١٥ أكتوبر ٢٠٢٦"
+UPDATED_EN, UPDATED_AR = "16 October 2026", "١٦ أكتوبر ٢٠٢٦"
 
 STRING = r'"((?:[^"\\]|\\.)*)"'
 POINT = re.compile(r"\{t\(" + STRING + r",\s*" + STRING + r"\),\s*t\(" + STRING + r",\s*" + STRING + r"\)\}", re.S)
