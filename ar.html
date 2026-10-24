@@ -5,11 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>شاين — أوامر صوتية لسيارة دونغ فنغ شاين</title>
 <meta name="description" content="أوامر صوتية مجانية لسيارة دونغ فنغ شاين، باللهجة المصرية أو بالإنجليزية. قل «هاي شاين» وتحكّم في التكييف والنوافذ وفتحة السقف والموسيقى والمكالمات، دون الحاجة إلى الإنترنت.">
-<link rel="icon" href="data:,">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="assets/icons/icon-192.png">
+<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=2">
+<link rel="stylesheet" href="style.css?v=3">
 </head>
 <body>
 
@@ -165,50 +168,31 @@
     <p class="section-lead">تعرض بطاقة صغيرة ما سمعته شاين وما فعلته، في كل مرة.</p>
 
     <div class="screens">
-      <div class="device-stage">
-        <div class="device-mock">
-          <div class="screen">
-            <div class="device-card">
-              <div class="row">
-                <span class="pulse"></span>
-                <span class="status">أستمع…</span>
-              </div>
-              <div class="heard">«شغّل التكييف»</div>
-              <div class="reply">حاضر، شغّلت التكييف.</div>
-            </div>
+      <div class="device-mock" id="hu">
+        <div class="screen">
+          <div class="hu-bar" dir="ltr"><span>10:42</span><span class="hu-icons"><i></i><i></i><i></i></span></div>
+          <div class="hu-tiles" aria-hidden="true"><span class="t-map"></span><span class="t-media"></span><span class="t-air"></span></div>
+          <div class="device-card is-on" data-i="0">
+            <div class="row"><span class="pulse"></span><span class="status">أستمع…</span></div>
+            <div class="heard">«شغّل التكييف»</div>
+            <div class="reply">حاضر، شغّلت التكييف.</div>
+          </div>
+          <div class="device-card done" data-i="1">
+            <div class="row"><span class="check"><svg viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="#05130b" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="status">تم</span></div>
+            <div class="heard">«افتح فتحة السقف»</div>
+            <div class="reply">حاضر، بفتح فتحة السقف.</div>
+          </div>
+          <div class="device-card done" data-i="2">
+            <div class="row"><span class="check"><svg viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="#05130b" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="status">تم</span></div>
+            <div class="heard">«دفّي العربية»</div>
+            <div class="reply">هخلّي العربية أدفى.</div>
           </div>
         </div>
-        <p class="device-caption"><b>«شغّل التكييف»</b>: تسمع، وتؤكد، وتنفّذ.</p>
       </div>
-      <div class="device-stage">
-        <div class="device-mock done">
-          <div class="screen">
-            <div class="device-card done">
-              <div class="row">
-                <span class="check"><svg viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="#05130b" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-                <span class="status">تم</span>
-              </div>
-              <div class="heard">«افتح الفتحة»</div>
-              <div class="reply">حاضر، بفتح فتحة السقف.</div>
-            </div>
-          </div>
-        </div>
-        <p class="device-caption"><b>تعرض ولا تخمّن</b>: يُظهر كل أمر ما سمعته شاين وما فعلته.</p>
-      </div>
-      <div class="device-stage">
-        <div class="device-mock done">
-          <div class="screen">
-            <div class="device-card done">
-              <div class="row">
-                <span class="check"><svg viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="#05130b" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-                <span class="status">تم</span>
-              </div>
-              <div class="heard">«دفّي العربية»</div>
-              <div class="reply">هخلّي العربية أدفى.</div>
-            </div>
-          </div>
-        </div>
-        <p class="device-caption"><b>بكلامك أنت</b>: «دفّي العربية» أو «أنا بردان» أو «علّي الحرارة»، كلها مفهومة.</p>
+      <div class="hu-captions">
+        <button type="button" class="device-caption is-on" data-i="0"><b>«شغّل التكييف»</b>: تسمع، وتؤكد، وتنفّذ.</button>
+        <button type="button" class="device-caption" data-i="1"><b>تعرض ولا تخمّن</b>: يُظهر كل أمر ما سمعته شاين وما فعلته.</button>
+        <button type="button" class="device-caption" data-i="2"><b>بكلامك أنت</b>: «دفّي العربية» أو «أنا بردان» أو «علّي الحرارة»، كلها مفهومة.</button>
       </div>
     </div>
   </div>
@@ -263,6 +247,7 @@
       <a href="index.html" lang="en">English</a>
     </div>
   </div>
+  <p class="made-by" dir="ltr">Made with <span class="heart" aria-label="love">❤️</span> by Mohammed Ghoneim</p>
 </footer>
 
 <script>
@@ -282,5 +267,27 @@
     });
 </script>
 
+<script>
+  // "See it in the car": the head unit shows the three cards in turn; a caption shows its card.
+  (function () {
+    var hu = document.getElementById('hu');
+    if (!hu) return;
+    var cards = hu.querySelectorAll('.device-card'), caps = document.querySelectorAll('.hu-captions .device-caption');
+    var i = 0, timer = null, still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function show(n) {
+      i = n;
+      for (var k = 0; k < cards.length; k++) {
+        cards[k].classList.toggle('is-on', k === n);
+        caps[k].classList.toggle('is-on', k === n);
+      }
+      hu.classList.toggle('done', cards[n].classList.contains('done'));
+    }
+    function start() { if (!still) timer = setInterval(function () { show((i + 1) % cards.length); }, 4000); }
+    for (var k = 0; k < caps.length; k++) {
+      caps[k].addEventListener('click', (function (n) { return function () { clearInterval(timer); show(n); start(); }; })(k));
+    }
+    show(0); start();
+  })();
+</script>
 </body>
 </html>
