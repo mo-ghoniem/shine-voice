@@ -11,7 +11,7 @@ import re
 SITE = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 MENU = os.path.join(SITE, "..", "DFMVoiceDaemon", "app", "src", "main", "java", "com", "dfm", "voicedaemon", "MenuScreen.java")
 MAIL = "support@shinevoiceofficial.com"
-UPDATED_EN, UPDATED_AR = "16 October 2026", "١٦ أكتوبر ٢٠٢٦"
+UPDATED_EN, UPDATED_AR = "25 October 2026", "٢٥ أكتوبر ٢٠٢٦"
 
 STRING = r'"((?:[^"\\]|\\.)*)"'
 POINT = re.compile(r"\{t\(" + STRING + r",\s*" + STRING + r"\),\s*t\(" + STRING + r",\s*" + STRING + r"\)\}", re.S)
@@ -44,11 +44,14 @@ def main():
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Shine Voice — Privacy policy</title>
 <meta name="description" content="How the Shine Voice app treats your voice, your contacts and your car's information.">
-<link rel="icon" href="data:,">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="assets/icons/icon-192.png">
+<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=Noto+Kufi+Arabic:wght@400;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=2">
+<link rel="stylesheet" href="style.css?v=3">
 </head>
 <body>
 <header class="nav">
@@ -85,6 +88,7 @@ def main():
     <p>Shine Voice is an independent project, not affiliated with Dongfeng Motor.</p>
     <div class="foot-links"><a href="index.html">Home</a><a href="ar.html" lang="ar">عربي</a></div>
   </div>
+  <p class="made-by" dir="ltr">Made with <span class="heart" aria-label="love">❤️</span> by Mohammed Ghoneim</p>
 </footer>
 </body>
 </html>
